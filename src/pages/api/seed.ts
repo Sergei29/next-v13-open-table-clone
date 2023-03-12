@@ -1,8 +1,9 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { PriceRange, PrismaClient } from "@prisma/client";
+import { PriceRange } from "@prisma/client";
 
-const prisma = new PrismaClient();
+import { db as prisma } from "@/lib";
+
 type Data = {
   name: string;
 };

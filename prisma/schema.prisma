@@ -29,11 +29,11 @@ model Restaurant {
   close_time  String
   slug        String     @unique
   price       PriceRange
-  Item        Item[]
+  items       Item[]
   location_id String
   location    Location   @relation(fields: [location_id], references: [id])
   cuisine_id  String
-  Cuisine     Cuisine    @relation(fields: [cuisine_id], references: [id])
+  cuisine     Cuisine    @relation(fields: [cuisine_id], references: [id])
 }
 
 model Item {
@@ -54,7 +54,7 @@ model Location {
   updated_at DateTime @updatedAt
   name       String
 
-  Restaurant Restaurant[]
+  restaurants Restaurant[]
 }
 
 model Cuisine {
@@ -63,5 +63,5 @@ model Cuisine {
   updated_at DateTime @updatedAt
   name       String
 
-  Restaurant Restaurant[]
+  restaurants Restaurant[]
 }
