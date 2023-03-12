@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 import { RestaurantCardType, PriceRange } from "@/types";
 
@@ -21,8 +22,13 @@ const RestaurantCard = ({ restaurant }: Props): JSX.Element => {
   return (
     <div className="w-64 h-72 m-3 rounded overflow-hidden border cursor-pointer">
       <Link href={`/restaurant/${slug}`}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={main_image} alt={name} className="w-full h-36" />
+        <Image
+          src={main_image}
+          alt={name}
+          width={254}
+          height={144}
+          className="w-full h-36"
+        />
         <div className="p-1">
           <h3 className="font-bold text-2xl mb-2">{name}</h3>
           <div className="flex items-start">
