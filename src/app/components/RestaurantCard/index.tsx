@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { RestaurantCardType, PriceRange } from "@/types";
+import Price from "../Price";
 
 const { CHEAP, REGULAR, EXPENSIVE } = PriceRange;
 
@@ -37,7 +38,7 @@ const RestaurantCard = ({ restaurant }: Props): JSX.Element => {
           </div>
           <div className="flex text-reg font-light capitalize">
             <p className=" mr-3">{cuisine.name}</p>
-            <p className="mr-3">{priceRange[price]}</p>
+            <Price className="mr-3" price={price} />
             <p>{location.name}</p>
           </div>
           <p className="text-sm mt-1 font-bold">Booked 3 times today</p>
