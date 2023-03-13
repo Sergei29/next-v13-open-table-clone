@@ -21,7 +21,7 @@ const SearchBar = (): JSX.Element => {
 
   const handleSubmit = () => {
     if (!isValid(location)) return;
-    router.push(`/search?city=${location}`);
+    router.push(`/search?city=${location.toLowerCase()}`);
     setLocation("");
   };
 

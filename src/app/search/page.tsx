@@ -7,35 +7,44 @@ import RestaurantsList from "./components/RestaurantsList";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
 
+const SELECT_CRITERIA = {
+  id: true,
+  main_image: true,
+  name: true,
+  slug: true,
+  cuisine: {
+    select: {
+      id: true,
+      name: true,
+    },
+  },
+  location: {
+    select: {
+      id: true,
+      name: true,
+    },
+  },
+  price: true,
+};
+
 const fetchRestaurantByLocation = async (
   city: string
 ): Promise<RestaurantCardType[] | null> => {
   try {
+    if (!city) {
+      return await db.restaurant.findMany({
+        select: SELECT_CRITERIA,
+      });
+    }
     const restaurantsFound = await db.restaurant.findMany({
       where: {
         location: {
-          name: city,
-        },
-      },
-      select: {
-        id: true,
-        main_image: true,
-        name: true,
-        slug: true,
-        cuisine: {
-          select: {
-            id: true,
-            name: true,
+          name: {
+            equals: city,
           },
         },
-        location: {
-          select: {
-            id: true,
-            name: true,
-          },
-        },
-        price: true,
       },
+      select: SELECT_CRITERIA,
     });
 
     return restaurantsFound;
