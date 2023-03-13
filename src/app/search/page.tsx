@@ -12,6 +12,7 @@ const SELECT_CRITERIA = {
   main_image: true,
   name: true,
   slug: true,
+  price: true,
   cuisine: {
     select: {
       id: true,
@@ -24,11 +25,10 @@ const SELECT_CRITERIA = {
       name: true,
     },
   },
-  price: true,
 };
 
 const fetchRestaurantByLocation = async (
-  city: string
+  city?: string
 ): Promise<RestaurantCardType[] | null> => {
   try {
     if (!city) {
@@ -36,6 +36,7 @@ const fetchRestaurantByLocation = async (
         select: SELECT_CRITERIA,
       });
     }
+
     const restaurantsFound = await db.restaurant.findMany({
       where: {
         location: {
@@ -61,7 +62,7 @@ const SearchPage = async ({ searchParams }: PageProps) => {
   return (
     <>
       <Header />
-      <div className="flex py-4 m-auto w-2/3 justify-between items-start">
+      <div className="flex py-4 m-auto w-2/3 justify-between items-start gap-4">
         <Sidebar />
         <div className="w-5/6">
           <RestaurantsList list={restaurants} />

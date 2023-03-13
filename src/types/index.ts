@@ -1,15 +1,6 @@
-import { PriceRange, Item } from "@prisma/client";
+import { PriceRange, Item, Cuisine, Location } from "@prisma/client";
 
 export { PriceRange } from "@prisma/client";
-export interface Location {
-  id: string;
-  name: string;
-}
-
-export interface Cuisine {
-  id: string;
-  name: string;
-}
 
 export type MenuItem = Pick<Item, "id" | "name" | "description" | "price">;
 export interface RestaurantCardType {
@@ -17,8 +8,8 @@ export interface RestaurantCardType {
   main_image: string;
   name: string;
   slug: string;
-  cuisine: Cuisine;
-  location: Location;
+  cuisine: Pick<Cuisine, "id" | "name">;
+  location: Pick<Location, "id" | "name">;
   price: PriceRange;
 }
 
