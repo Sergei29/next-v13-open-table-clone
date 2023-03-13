@@ -1,34 +1,38 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 
-type Props = {};
+import Price from "@/app/components/Price";
+import { RestaurantCardType } from "@/types";
 
-const RestaurantCard = ({}: Props): JSX.Element => {
+type Props = { restaurant: RestaurantCardType };
+
+const RestaurantCard = ({ restaurant }: Props): JSX.Element => {
+  const { name, main_image, price, cuisine, location, slug } = restaurant;
   return (
     <div className="border-b flex pb-5">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src="https://images.otstatic.com/prod1/49153814/2/medium.jpg"
-        alt=""
+      <Image
+        src={main_image}
+        alt={name}
+        width={254}
+        height={144}
         className="w-44 rounded"
       />
       <div className="pl-5">
-        <h2 className="text-3xl">Aiāna Restaurant Collective</h2>
+        <h2 className="text-3xl">{name}</h2>
         <div className="flex items-start">
           <div className="flex mb-2">*****</div>
           <p className="ml-2 text-sm">Awesome</p>
         </div>
         <div className="mb-9">
           <div className="font-light flex text-reg">
-            <p className="mr-4">$$$</p>
-            <p className="mr-4">Mexican</p>
-            <p className="mr-4">Ottawa</p>
+            <Price className="mr-4" price={price} />
+            <p className="mr-4">{cuisine.name}</p>
+            <p className="mr-4">{location.name}</p>
           </div>
         </div>
         <div className="text-red-600">
-          <Link href="/restaurant/aiana-restaurant-collective">
-            View more information
-          </Link>
+          <Link href={`/restaurant/${slug}`}>View more information</Link>
         </div>
       </div>
     </div>

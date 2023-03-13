@@ -4,16 +4,14 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
 const isValid = (value: string) => {
-  if (!value.trim() || value === "banana") {
+  if (!value.trim()) {
     return false;
   }
 
   return true;
 };
 
-type Props = {};
-
-const SearchBar = ({}: Props): JSX.Element => {
+const SearchBar = (): JSX.Element => {
   const router = useRouter();
   const [location, setLocation] = useState("");
 
@@ -23,7 +21,8 @@ const SearchBar = ({}: Props): JSX.Element => {
 
   const handleSubmit = () => {
     if (!isValid(location)) return;
-    router.push(`/search?${location}`);
+    router.push(`/search?city=${location}`);
+    setLocation("");
   };
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
