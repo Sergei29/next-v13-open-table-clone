@@ -11,7 +11,9 @@ type Props = {
 const Images = ({ images }: Props): JSX.Element => {
   return (
     <div>
-      <h1 className="font-bold text-3xl mt-10 mb-7 border-b pb-5">5 photos</h1>
+      <h1 className="font-bold text-3xl mt-10 mb-7 border-b pb-5">{`${
+        images.length
+      } photo${images.length > 1 ? "s" : ""}`}</h1>
       <div className="flex flex-wrap">
         {images.map((imageUrl) => (
           <Image

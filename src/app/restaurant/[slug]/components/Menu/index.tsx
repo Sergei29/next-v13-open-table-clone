@@ -1,10 +1,13 @@
 import React from "react";
 
+import { MenuItem } from "@/types";
 import MenuCard from "../MenuCard";
 
-type Props = {};
+type Props = {
+  items: MenuItem[];
+};
 
-const Menu = ({}: Props): JSX.Element => {
+const Menu = ({ items }: Props): JSX.Element => {
   return (
     <div className="bg-white mt-5">
       <div>
@@ -12,7 +15,13 @@ const Menu = ({}: Props): JSX.Element => {
           <h1 className="font-bold text-4xl">Menu</h1>
         </div>
         <div className="flex flex-wrap justify-between">
-          <MenuCard />
+          {items.length > 0 ? (
+            items.map((currentItem) => (
+              <MenuCard key={currentItem.id} menuItem={currentItem} />
+            ))
+          ) : (
+            <p>no menu available</p>
+          )}
         </div>
       </div>
     </div>
