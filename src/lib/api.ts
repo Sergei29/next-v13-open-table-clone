@@ -4,6 +4,7 @@ import {
   MenuItem,
   Location,
   Cuisine,
+  PriceRange,
 } from "@/types";
 import { db } from "@/lib";
 
@@ -27,24 +28,42 @@ const SELECT__BY_LOCATION_CRITERIA = {
   },
 };
 
-export const fetchRestaurantByLocation = async (
-  city?: string
-): Promise<RestaurantCardType[] | null> => {
+interface IFilterParams {
+  city?: string;
+  cuisine?: string;
+  price?: PriceRange;
+}
+export const fetchRestaurantByLocation = async ({
+  city,
+  cuisine,
+  price,
+}: IFilterParams): Promise<RestaurantCardType[] | null> => {
   try {
     if (!city) {
       return await db.restaurant.findMany({
         select: SELECT__BY_LOCATION_CRITERIA,
       });
     }
-
-    const restaurantsFound = await db.restaurant.findMany({
-      where: {
-        location: {
-          name: {
-            equals: city,
-          },
+    const filterParams: Record<string, any> = {
+      location: {
+        name: {
+          equals: city,
         },
       },
+    };
+    if (cuisine) {
+      filterParams.cuisine = {
+        name: { equals: cuisine },
+      };
+    }
+    if (price) {
+      filterParams.price = {
+        equals: price,
+      };
+    }
+
+    const restaurantsFound = await db.restaurant.findMany({
+      where: filterParams,
       select: SELECT__BY_LOCATION_CRITERIA,
     });
 

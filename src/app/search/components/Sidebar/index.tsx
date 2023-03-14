@@ -22,21 +22,21 @@ const Sidebar = ({ locationsList, cuisineList }: IProps): JSX.Element => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const setQueryParams = (key: string, value: string) => {
+  const setQueryParams = (key: string, value?: string) => {
     const params = new URLSearchParams(searchParams || undefined);
-    params.set(key, value);
+    value ? params.set(key, value) : params.delete(key);
     router.replace(`${pathname}?${params}`);
   };
 
-  const handleClickLocation = (locationName: string) => {
+  const handleClickLocation = (locationName?: string) => {
     setQueryParams(KEYS.LOCATION, locationName);
   };
 
-  const handleClickCuisine = (cuisine: string) => {
+  const handleClickCuisine = (cuisine?: string) => {
     setQueryParams(KEYS.CUISINE, cuisine);
   };
 
-  const handleClickPrice = (price: PriceRange) => {
+  const handleClickPrice = (price?: PriceRange) => {
     setQueryParams(KEYS.PRICE, price);
   };
 
@@ -47,11 +47,18 @@ const Sidebar = ({ locationsList, cuisineList }: IProps): JSX.Element => {
         <List list={locationsList} handleItemClick={handleClickLocation} />
       </div>
       <div className="border-b pb-4 mt-3">
-        <h1 className="mb-2">Cuisine</h1>
+        <h1
+          className="mb-2 cursor-pointer"
+          onClick={() => handleClickCuisine()}
+        >
+          Cuisine
+        </h1>
         <List list={cuisineList} handleItemClick={handleClickCuisine} />
       </div>
       <div className="mt-3 pb-4">
-        <h1 className="mb-2">Price</h1>
+        <h1 className="mb-2 cursor-pointer" onClick={() => handleClickPrice()}>
+          Price
+        </h1>
         <div className="flex">
           <button
             className="border w-full text-reg font-light rounded-l p-2"

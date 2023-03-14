@@ -5,15 +5,19 @@ import {
   fetchLocationsList,
   fetchCuisineList,
 } from "@/lib";
+import { PriceRange } from "@/types";
 
 import RestaurantsList from "./components/RestaurantsList";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
 
-type PageProps = { searchParams: { city: string } };
+type PageProps = {
+  searchParams: { city?: string; cuisine?: string; price?: PriceRange };
+};
 
 const SearchPage = async ({ searchParams }: PageProps) => {
-  const restaurants = await fetchRestaurantByLocation(searchParams.city);
+  const { city, cuisine, price } = searchParams;
+  const restaurants = await fetchRestaurantByLocation({ city, cuisine, price });
   const locationsList = await fetchLocationsList();
   const cuisineList = await fetchCuisineList();
 
