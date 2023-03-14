@@ -1,7 +1,6 @@
 import React from "react";
 
-import { RestaurantDetailsType } from "@/types";
-import { db } from "@/lib";
+import { fetchRestaurantDetails } from "@/lib";
 
 import ReservationCard from "./components/ReservationCard";
 import Description from "./components/Description";
@@ -10,34 +9,6 @@ import Reviews from "./components/Reviews";
 import Ratings from "./components/Ratings";
 import Images from "./components/Images";
 import Title from "./components/Title";
-
-const fetchRestaurantDetails = async (
-  slug: string
-): Promise<RestaurantDetailsType> => {
-  try {
-    const found = await db.restaurant.findUnique({
-      where: {
-        slug,
-      },
-      select: {
-        id: true,
-        name: true,
-        description: true,
-        slug: true,
-        images: true,
-        location: { select: { id: true, name: true } },
-      },
-    });
-
-    if (!found) {
-      throw new Error("not found.");
-    }
-
-    return found;
-  } catch (error) {
-    throw error;
-  }
-};
 
 type PageProps = { params: { slug: string } };
 

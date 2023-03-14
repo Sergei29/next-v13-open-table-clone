@@ -1,38 +1,9 @@
 import React from "react";
 
-import { MenuItem } from "@/types";
-import { db } from "@/lib";
+import { fetchRestaurantMenu } from "@/lib";
 
 import Navigation from "../components/Navigation";
 import Menu from "../components/Menu";
-
-const fetchRestaurantMenu = async (slug: string): Promise<MenuItem[]> => {
-  try {
-    const restaurant = await db.restaurant.findUnique({
-      where: {
-        slug,
-      },
-      select: {
-        items: {
-          select: {
-            id: true,
-            name: true,
-            price: true,
-            description: true,
-          },
-        },
-      },
-    });
-
-    if (!restaurant) {
-      throw new Error("not found");
-    }
-
-    return restaurant.items;
-  } catch (error) {
-    throw error;
-  }
-};
 
 type PageProps = { params: { slug: string } };
 
