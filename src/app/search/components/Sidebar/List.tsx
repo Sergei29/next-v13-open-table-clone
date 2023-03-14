@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 interface IListProps {
@@ -7,13 +9,18 @@ interface IListProps {
         name: string;
       }[]
     | null;
+  handleItemClick: (itemName: string) => void;
 }
 
-const List = ({ list }: IListProps) => (
+const List = ({ list, handleItemClick }: IListProps) => (
   <>
     {list?.length ? (
       list.map(({ id, name }) => (
-        <p key={id} className="font-light text-reg capitalize">
+        <p
+          key={id}
+          className="font-light text-reg capitalize cursor-pointer"
+          onClick={() => handleItemClick(name)}
+        >
           {name}
         </p>
       ))
