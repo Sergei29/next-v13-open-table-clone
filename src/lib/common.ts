@@ -4,3 +4,5 @@ export const classnames = (...maybeClassNames: unknown[]) =>
       return typeof currentClassname === "string" && !!currentClassname;
     })
     .join(" ");
+
+export const isServer = () => typeof window === "undefined";

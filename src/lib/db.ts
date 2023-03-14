@@ -1,10 +1,8 @@
 import { PrismaClient } from "@prisma/client";
-
+import { isServer } from "./common";
 declare global {
   var cachedPrisma: PrismaClient;
 }
-
-export const isServer = () => typeof window === "undefined";
 
 let prisma: PrismaClient;
 
