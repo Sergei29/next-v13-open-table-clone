@@ -1,16 +1,11 @@
 "use client";
 
 import React from "react";
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
 
 import { Location, Cuisine, PriceRange } from "@/types";
+import { classnames } from "@/lib";
+import useRearchRestaurants, { KEYS } from "@/hooks/useRearchRestaurants";
 import List from "./List";
-
-const KEYS = {
-  LOCATION: "city",
-  CUISINE: "cuisine",
-  PRICE: "price",
-};
 
 interface IProps {
   locationsList: Location[] | null;
@@ -18,15 +13,7 @@ interface IProps {
 }
 
 const Sidebar = ({ locationsList, cuisineList }: IProps): JSX.Element => {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  const setQueryParams = (key: string, value?: string) => {
-    const params = new URLSearchParams(searchParams || undefined);
-    value ? params.set(key, value) : params.delete(key);
-    router.replace(`${pathname}?${params}`);
-  };
+  const { location, cuisine, price, setQueryParams } = useRearchRestaurants();
 
   const handleClickLocation = (locationName?: string) => {
     setQueryParams(KEYS.LOCATION, locationName);
@@ -44,7 +31,11 @@ const Sidebar = ({ locationsList, cuisineList }: IProps): JSX.Element => {
     <div className="w-1/5">
       <div className="border-b pb-4">
         <h1 className="mb-2">Region</h1>
-        <List list={locationsList} handleItemClick={handleClickLocation} />
+        <List
+          list={locationsList}
+          handleItemClick={handleClickLocation}
+          selectedItem={location}
+        />
       </div>
       <div className="border-b pb-4 mt-3">
         <h1
@@ -53,7 +44,11 @@ const Sidebar = ({ locationsList, cuisineList }: IProps): JSX.Element => {
         >
           Cuisine
         </h1>
-        <List list={cuisineList} handleItemClick={handleClickCuisine} />
+        <List
+          list={cuisineList}
+          handleItemClick={handleClickCuisine}
+          selectedItem={cuisine}
+        />
       </div>
       <div className="mt-3 pb-4">
         <h1 className="mb-2 cursor-pointer" onClick={() => handleClickPrice()}>
@@ -61,22 +56,31 @@ const Sidebar = ({ locationsList, cuisineList }: IProps): JSX.Element => {
         </h1>
         <div className="flex">
           <button
-            className="border w-full text-reg font-light rounded-l p-2"
+            className={classnames(
+              "border w-full text-reg font-light rounded-l p-2",
+              price === PriceRange.CHEAP && "bg-red-700"
+            )}
             onClick={() => handleClickPrice(PriceRange.CHEAP)}
-          >
-            $
-          </button>
-          <button
-            className="border-r border-t border-b w-full text-reg font-light p-2"
-            onClick={() => handleClickPrice(PriceRange.REGULAR)}
           >
             $$
           </button>
           <button
-            className="border-r border-t border-b w-full text-reg font-light p-2 rounded-r"
-            onClick={() => handleClickPrice(PriceRange.EXPENSIVE)}
+            className={classnames(
+              "border-r border-t border-b w-full text-reg font-light p-2",
+              price === PriceRange.REGULAR && "bg-red-700"
+            )}
+            onClick={() => handleClickPrice(PriceRange.REGULAR)}
           >
             $$$
+          </button>
+          <button
+            className={classnames(
+              "border-r border-t border-b w-full text-reg font-light p-2 rounded-r",
+              price === PriceRange.EXPENSIVE && "bg-red-700"
+            )}
+            onClick={() => handleClickPrice(PriceRange.EXPENSIVE)}
+          >
+            $$$$
           </button>
         </div>
       </div>
