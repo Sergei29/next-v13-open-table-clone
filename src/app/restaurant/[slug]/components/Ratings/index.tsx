@@ -1,6 +1,8 @@
 import React from "react";
 
-type Props = {};
+type Props = {
+  [x: string]: any;
+};
 
 const Ratings = ({}: Props): JSX.Element => {
   return (

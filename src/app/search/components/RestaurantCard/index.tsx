@@ -3,12 +3,20 @@ import Link from "next/link";
 import Image from "next/image";
 
 import Price from "@/app/components/Price";
+import {
+  getRatingStars,
+  getRatingText,
+  calculateReviewRatingAverage,
+} from "@/lib";
 import { RestaurantCardType } from "@/types";
 
 type Props = { restaurant: RestaurantCardType };
 
 const RestaurantCard = ({ restaurant }: Props): JSX.Element => {
-  const { name, main_image, price, cuisine, location, slug } = restaurant;
+  const { name, main_image, price, cuisine, location, slug, reviews } =
+    restaurant;
+  const ratingAverage = calculateReviewRatingAverage(reviews);
+
   return (
     <div className="border-b flex pb-5">
       <Image
@@ -21,8 +29,8 @@ const RestaurantCard = ({ restaurant }: Props): JSX.Element => {
       <div className="pl-5">
         <h2 className="text-3xl">{name}</h2>
         <div className="flex items-start">
-          <div className="flex mb-2">*****</div>
-          <p className="ml-2 text-sm">Awesome</p>
+          <div className="flex mb-2">{getRatingStars(ratingAverage)}</div>
+          <p className="ml-2 text-sm">{getRatingText(ratingAverage)}</p>
         </div>
         <div className="mb-9">
           <div className="font-light flex text-reg">

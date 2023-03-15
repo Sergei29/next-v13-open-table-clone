@@ -8,7 +8,7 @@ import {
 } from "@/types";
 import { db } from "@/lib";
 
-const SELECT__BY_LOCATION_CRITERIA = {
+const SELECT_RESTAURANT_SUMMARY = {
   id: true,
   main_image: true,
   name: true,
@@ -26,6 +26,12 @@ const SELECT__BY_LOCATION_CRITERIA = {
       name: true,
     },
   },
+  reviews: {
+    select: {
+      id: true,
+      rating: true,
+    },
+  },
 };
 
 interface IFilterParams {
@@ -41,7 +47,7 @@ export const fetchRestaurantByLocation = async ({
   try {
     if (!city) {
       return await db.restaurant.findMany({
-        select: SELECT__BY_LOCATION_CRITERIA,
+        select: SELECT_RESTAURANT_SUMMARY,
       });
     }
     const filterParams: Record<string, any> = {
@@ -64,7 +70,7 @@ export const fetchRestaurantByLocation = async ({
 
     const restaurantsFound = await db.restaurant.findMany({
       where: filterParams,
-      select: SELECT__BY_LOCATION_CRITERIA,
+      select: SELECT_RESTAURANT_SUMMARY,
     });
 
     return restaurantsFound;
@@ -88,6 +94,15 @@ export const fetchRestaurantDetails = async (
         slug: true,
         images: true,
         location: { select: { id: true, name: true } },
+        reviews: {
+          select: {
+            id: true,
+            first_name: true,
+            last_name: true,
+            text: true,
+            rating: true,
+          },
+        },
       },
     });
 
@@ -136,25 +151,7 @@ export const fetchRestaurants = async (): Promise<
 > => {
   try {
     const allRestaurants = await db.restaurant.findMany({
-      select: {
-        id: true,
-        main_image: true,
-        name: true,
-        slug: true,
-        cuisine: {
-          select: {
-            id: true,
-            name: true,
-          },
-        },
-        location: {
-          select: {
-            id: true,
-            name: true,
-          },
-        },
-        price: true,
-      },
+      select: SELECT_RESTAURANT_SUMMARY,
     });
 
     return allRestaurants;

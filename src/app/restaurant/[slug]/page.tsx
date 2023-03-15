@@ -14,7 +14,7 @@ type PageProps = { params: { slug: string } };
 
 const RestaurantDetailsPage = async ({ params }: PageProps) => {
   const restaurantFound = await fetchRestaurantDetails(params.slug);
-  const { name, slug, description, images } = restaurantFound;
+  const { name, slug, description, images, reviews } = restaurantFound;
 
   return (
     <>
@@ -24,7 +24,7 @@ const RestaurantDetailsPage = async ({ params }: PageProps) => {
         <Ratings />
         <Description description={description} />
         <Images images={images} />
-        <Reviews />
+        <Reviews reviews={reviews} />
       </div>
       <div className="w-[27%] relative text-reg">
         <ReservationCard />
