@@ -21,7 +21,7 @@ const RestaurantDetailsPage = async ({ params }: PageProps) => {
       <div className="bg-white w-[70%] rounded p-3 shadow">
         <Navigation name={slug} />
         <Title>{name}</Title>
-        <Ratings />
+        <Ratings ratings={reviews?.map((current) => current.rating) || []} />
         <Description description={description} />
         <Images images={images} />
         <Reviews reviews={reviews} />

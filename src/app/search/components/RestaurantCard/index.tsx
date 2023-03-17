@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import Price from "@/app/components/Price";
+import Stars from "@/app/components/Stars";
 import {
   getRatingStars,
   getRatingText,
@@ -28,9 +29,11 @@ const RestaurantCard = ({ restaurant }: Props): JSX.Element => {
       />
       <div className="pl-5">
         <h2 className="text-3xl">{name}</h2>
-        <div className="flex items-start">
-          <div className="flex mb-2">{getRatingStars(ratingAverage)}</div>
-          <p className="ml-2 text-sm">{getRatingText(ratingAverage)}</p>
+        <div className="flex items-start my-2">
+          <Stars rating={ratingAverage} starSize={18} />
+          <p className="ml-2 text-sm">
+            {getRatingText(ratingAverage) || "no rated yet"}
+          </p>
         </div>
         <div className="mb-9">
           <div className="font-light flex text-reg">

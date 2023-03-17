@@ -9,11 +9,12 @@ type Props = {
 };
 
 const Reviews = ({ reviews }: Props): JSX.Element => {
+  const count = reviews?.length || 0;
   return (
     <div>
       <h1 className="font-bold text-3xl mt-10 mb-7 borber-b pb-5">
-        {reviews?.length
-          ? `What ${reviews.length} people are saying`
+        {count
+          ? `What ${count} ${count > 1 ? "people are" : "person is"} saying`
           : "No reviews yet"}
       </h1>
       <div>

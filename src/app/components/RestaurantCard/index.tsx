@@ -5,6 +5,7 @@ import Image from "next/image";
 import { RestaurantCardType } from "@/types";
 import { calculateReviewRatingAverage, getRatingStars } from "@/lib";
 import Price from "../Price";
+import Stars from "../Stars";
 
 const getReviewsText = (reviews?: number) => {
   if (!reviews) return "no reviews yet";
@@ -33,8 +34,8 @@ const RestaurantCard = ({ restaurant }: Props): JSX.Element => {
         />
         <div className="p-1">
           <h3 className="font-bold text-2xl mb-2">{name}</h3>
-          <div className="flex items-start">
-            <div className="flex mb-2">{getRatingStars(ratingAverage)}</div>
+          <div className="flex items-center mb-2">
+            <Stars rating={ratingAverage} starSize={18} />
             <p className="ml-2">{getReviewsText(reviews?.length)}</p>
           </div>
           <div className="flex text-reg font-light capitalize">

@@ -7,17 +7,20 @@ export const classnames = (...maybeClassNames: unknown[]) =>
 
 export const isServer = () => typeof window === "undefined";
 
-export const calculateReviewRatingAverage = (
-  ratings?: Record<string, any> & { rating: number }[]
-) => {
+export const calculateRatingAverage = (ratings?: number[]) => {
   if (!ratings?.length) return 0;
 
   const averageFloat =
-    ratings
-      .map((current) => current.rating)
-      .reduce((total, current) => total + current, 0) / ratings.length;
+    ratings.reduce((total, current) => total + current, 0) / ratings.length;
 
-  return parseFloat(averageFloat.toFixed(2));
+  return parseFloat(averageFloat.toFixed(1));
+};
+
+export const calculateReviewRatingAverage = (
+  ratings?: Record<string, any> & { rating: number }[]
+) => {
+  if (!ratings) return 0;
+  return calculateRatingAverage(ratings.map((current) => current.rating));
 };
 
 export const getRatingStars = (rating: number) => {
