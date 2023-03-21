@@ -1,3 +1,5 @@
+import { notFound } from "next/navigation";
+
 import {
   RestaurantCardType,
   RestaurantDetailsType,
@@ -107,7 +109,7 @@ export const fetchRestaurantDetails = async (
     });
 
     if (!found) {
-      throw new Error("not found.");
+      notFound();
     }
 
     return found;
