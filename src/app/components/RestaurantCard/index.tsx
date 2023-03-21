@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { RestaurantCardType } from "@/types";
-import { calculateReviewRatingAverage, getRatingStars } from "@/lib";
+import { calculateReviewRatingAverage } from "@/lib";
 import Price from "../Price";
 import Stars from "../Stars";
 

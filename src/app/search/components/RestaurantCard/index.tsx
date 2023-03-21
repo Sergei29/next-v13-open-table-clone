@@ -4,11 +4,7 @@ import Image from "next/image";
 
 import Price from "@/app/components/Price";
 import Stars from "@/app/components/Stars";
-import {
-  getRatingStars,
-  getRatingText,
-  calculateReviewRatingAverage,
-} from "@/lib";
+import { getRatingText, calculateReviewRatingAverage } from "@/lib";
 import { RestaurantCardType } from "@/types";
 
 type Props = { restaurant: RestaurantCardType };
